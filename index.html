@@ -201,28 +201,7 @@
             body: JSON.stringify(payload),
           })
             .then((response) => response.json())
-            .then((res) => {
-              document.getElementById("loading").classList.add("hidden");
 
-              if (res.status === "success" || res.result === "success") {
-                const ticket = res.ticketId || "ได้รับแล้ว";
-
-                // ส่งข้อความยืนยันเข้าแชท
-                liff
-                  .then(() => {
-                    liff.closeWindow();
-                  })
-                  .catch(() => {
-                    // กรณีส่งแชทไม่ได้ (เช่น เปิดในคอม)
-                    alert(`บันทึกสำเร็จ! Ticket: ${ticket}`);
-                    liff.closeWindow();
-                  });
-              } else {
-                alert(
-                  "บันทึกไม่สำเร็จ: " + (res.message || JSON.stringify(res))
-                );
-              }
-            })
             .catch((err) => {
               document.getElementById("loading").classList.add("hidden");
               alert("เกิดข้อผิดพลาด: " + err);
