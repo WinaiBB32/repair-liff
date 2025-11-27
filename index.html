@@ -27,7 +27,7 @@
         class="bg-blue-600 p-6 text-white rounded-b-3xl text-center shadow-md"
       >
         <h1 class="text-2xl font-bold">🛠️ ใบแจ้งซ่อม</h1>
-        <p class="text-blue-100 text-sm mt-1">ระบบแจ้งซ่อมออนไลน์</p>
+        <p class="text-blue-100 text-sm mt-1">กรอกข้อมูลให้ครบถ้วน</p>
       </div>
 
       <form id="repairForm" class="p-6 space-y-4 -mt-4">
@@ -126,12 +126,11 @@
 
     <script>
       // ============================================
-      // ✅ อัปเดตค่าตามที่คุณส่งมาแล้วครับ
+      // ⚙️ ตั้งค่า (อัปเดตล่าสุด)
       // ============================================
       const LIFF_ID = "2008574686-nwaPEvQj";
       const GAS_API =
         "https://script.google.com/macros/s/AKfycbwL8pWR4T3YJ_8F8ukmvj5IBtl6yKFYXfUh_cRcoVzK_wjE5PvSnHJ9e9yJCYwUaXIzEQ/exec";
-
       // ============================================
 
       async function main() {
@@ -186,14 +185,15 @@
               department: document.getElementById("dept").value,
               phone: document.getElementById("phone").value,
               location: document.getElementById("loc").value,
-              equipment: document.getElementById("equip").value,
-              description: document.getElementById("desc").value,
+              equipment: document.getElementById("equipment").value,
+              description: document.getElementById("description").value,
               imageBase64: img64,
               imageType: imgType,
             },
           };
 
-          // 3. ส่งข้อมูลไป Google Apps Script (ใช้ text/plain เพื่อหลบ CORS)
+          // 3. ส่งข้อมูลไป Google Apps Script
+          // ใช้ text/plain เพื่อแก้ปัญหา CORS และรับ Ticket ID กลับมาได้
           fetch(GAS_API, {
             method: "POST",
             redirect: "follow",
@@ -201,10 +201,26 @@
             body: JSON.stringify(payload),
           })
             .then((response) => response.json())
+            .then((res) => {
+              document.getElementById("loading").classList.add("hidden");
 
+              if (res.status === "success" || res.result === "success") {
+                const ticket = res.ticketId || "ได้รับข้อมูลแล้ว";
+
+                // ✅ แจ้งเตือนเลข Ticket และปิดหน้าต่างทันที (ไม่ส่งข้อความเข้าแชท)
+                alert(
+                  `✅ บันทึกสำเร็จ!\n\nเลขที่ใบงาน: ${ticket}\nระบบได้รับข้อมูลเรียบร้อยแล้ว`
+                );
+                liff.closeWindow();
+              } else {
+                alert(
+                  "❌ บันทึกไม่สำเร็จ: " + (res.message || JSON.stringify(res))
+                );
+              }
+            })
             .catch((err) => {
               document.getElementById("loading").classList.add("hidden");
-              alert("เกิดข้อผิดพลาด: " + err);
+              alert("เกิดข้อผิดพลาดในการเชื่อมต่อ: " + err);
             });
         });
     </script>
