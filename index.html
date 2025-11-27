@@ -2,8 +2,12 @@
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>แจ้งซ่อมออนไลน์</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       charset="utf-8"
@@ -13,115 +17,190 @@
       href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <style>
       body {
         font-family: "Kanit", sans-serif;
+        background-color: #f3f4f6;
+      }
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .input-field {
+        transition: all 0.3s ease;
+      }
+      .input-field:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
       }
     </style>
   </head>
-  <body class="bg-gray-100 min-h-screen font-sans">
-    <div
-      class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative pb-10"
-    >
+  <body class="text-gray-700">
+    <div class="max-w-md mx-auto min-h-screen relative pb-24">
       <div
-        class="bg-blue-600 p-6 text-white rounded-b-3xl text-center shadow-md"
+        class="glass-effect sticky top-0 z-40 shadow-sm px-6 py-4 rounded-b-3xl"
       >
-        <h1 class="text-2xl font-bold">🛠️ ใบแจ้งซ่อม</h1>
-        <p class="text-blue-100 text-sm mt-1">กรอกข้อมูลให้ครบถ้วน</p>
+        <div class="flex justify-between items-center">
+          <div>
+            <h1 class="text-xl font-bold text-indigo-900">🛠️ แจ้งซ่อม</h1>
+            <p class="text-xs text-gray-500">ระบบบริการงานซ่อมออนไลน์</p>
+          </div>
+          <div
+            id="profileSection"
+            class="hidden flex items-center gap-2 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100"
+          >
+            <img
+              id="userImg"
+              src=""
+              class="w-8 h-8 rounded-full border-2 border-white shadow-sm"
+            />
+            <span
+              id="userNameDisplay"
+              class="text-xs font-bold text-indigo-700 truncate max-w-[80px]"
+              >...</span
+            >
+          </div>
+        </div>
       </div>
 
-      <form id="repairForm" class="p-6 space-y-4 -mt-4">
+      <form id="repairForm" class="px-5 mt-6 space-y-6">
         <div
-          class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3"
+          class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden"
         >
-          <h3 class="font-bold text-gray-700 border-b pb-2 text-sm uppercase">
-            1. ข้อมูลผู้แจ้ง
+          <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+          <h3
+            class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"
+          >
+            <i class="fas fa-user-circle text-indigo-500 text-lg"></i>
+            ข้อมูลผู้แจ้ง
           </h3>
-          <input
-            type="text"
-            id="name"
-            class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            placeholder="ชื่อ-นามสกุล"
-            required
-          />
-          <div class="flex gap-2">
-            <input
-              type="text"
-              id="dept"
-              class="w-1/2 p-2.5 bg-gray-50 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="หน่วยงาน"
-              required
-            />
-            <input
-              type="tel"
-              id="phone"
-              class="w-1/2 p-2.5 bg-gray-50 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="เบอร์โทร"
-              required
-            />
+          <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2">
+              <input
+                type="text"
+                id="name"
+                class="input-field w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+                placeholder="ชื่อ-นามสกุล"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                id="department"
+                class="input-field w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+                placeholder="หน่วยงาน"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="tel"
+                id="phone"
+                class="input-field w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+                placeholder="เบอร์โทร"
+                required
+              />
+            </div>
           </div>
         </div>
 
         <div
-          class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3"
+          class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden"
         >
-          <h3 class="font-bold text-gray-700 border-b pb-2 text-sm uppercase">
-            2. รายละเอียดงาน
+          <div class="absolute top-0 left-0 w-1 h-full bg-orange-500"></div>
+          <h3
+            class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"
+          >
+            <i class="fas fa-tools text-orange-500 text-lg"></i> รายละเอียดงาน
           </h3>
-          <input
-            type="text"
-            id="loc"
-            class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            placeholder="สถานที่ (ตึก/ชั้น/ห้อง)"
-            required
-          />
-          <input
-            type="text"
-            id="equip"
-            class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            placeholder="ชื่ออุปกรณ์"
-            required
-          />
-          <textarea
-            id="desc"
-            rows="3"
-            class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            placeholder="อาการเสียอย่างละเอียด"
-            required
-          ></textarea>
+          <div class="space-y-4">
+            <input
+              type="text"
+              id="location"
+              class="input-field w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+              placeholder="สถานที่ (ตึก/ชั้น/ห้อง)"
+              required
+            />
+            <input
+              type="text"
+              id="equipment"
+              class="input-field w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+              placeholder="ชื่ออุปกรณ์"
+              required
+            />
+            <textarea
+              id="description"
+              rows="3"
+              class="input-field w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+              placeholder="อาการเสียอย่างละเอียด"
+              required
+            ></textarea>
+          </div>
         </div>
 
-        <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-          <label class="font-bold text-gray-700 block mb-2 text-sm uppercase"
-            >3. รูปภาพประกอบ</label
+        <div
+          class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden"
+        >
+          <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+          <label
+            class="text-sm font-bold text-gray-800 mb-2 flex items-center gap-2"
           >
-          <input
-            type="file"
-            id="img"
-            accept="image/*"
-            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-          />
+            <i class="fas fa-camera text-green-500 text-lg"></i> รูปภาพประกอบ
+          </label>
+
+          <div class="relative mt-3 group">
+            <input
+              type="file"
+              id="imageFile"
+              accept="image/*"
+              class="hidden"
+              onchange="previewImage(this)"
+            />
+            <div
+              id="uploadBox"
+              class="w-full h-32 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition"
+              onclick="document.getElementById('imageFile').click()"
+            >
+              <div id="placeholder" class="text-center">
+                <i
+                  class="fas fa-cloud-upload-alt text-2xl text-gray-300 mb-2"
+                ></i>
+                <p class="text-xs text-gray-400">แตะเพื่อเลือกรูปภาพ</p>
+              </div>
+              <img
+                id="preview"
+                class="hidden h-full w-full object-cover rounded-xl"
+              />
+            </div>
+          </div>
         </div>
 
         <button
           type="submit"
           id="submitBtn"
-          class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-blue-700 transition transform active:scale-95 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          class="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled
         >
           ⏳ กำลังเชื่อมต่อ LINE...
         </button>
       </form>
+    </div>
 
+    <div
+      id="loading"
+      class="hidden fixed inset-0 bg-white/90 backdrop-blur-sm z-50 flex flex-col items-center justify-center"
+    >
       <div
-        id="loading"
-        class="hidden fixed inset-0 bg-black/60 z-50 flex flex-col items-center justify-center backdrop-blur-sm"
-      >
-        <div
-          class="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mb-3"
-        ></div>
-        <p class="text-white font-bold">กำลังส่งข้อมูล...</p>
-      </div>
+        class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-100 border-t-indigo-600 mb-4"
+      ></div>
+      <p class="text-indigo-800 font-bold animate-pulse">กำลังส่งข้อมูล...</p>
     </div>
 
     <script>
@@ -133,16 +212,42 @@
         "https://script.google.com/macros/s/AKfycbwL8pWR4T3YJ_8F8ukmvj5IBtl6yKFYXfUh_cRcoVzK_wjE5PvSnHJ9e9yJCYwUaXIzEQ/exec";
       // ============================================
 
+      // Preview Image
+      function previewImage(input) {
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("preview").src = e.target.result;
+            document.getElementById("preview").classList.remove("hidden");
+            document.getElementById("placeholder").classList.add("hidden");
+            document
+              .getElementById("uploadBox")
+              .classList.remove("border-2", "border-dashed");
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
       async function main() {
         try {
           await liff.init({ liffId: LIFF_ID });
           if (liff.isLoggedIn()) {
             const profile = await liff.getProfile();
+            // Auto fill name
             document.getElementById("name").value = profile.displayName;
 
+            // Show Profile
+            document.getElementById("userImg").src = profile.pictureUrl;
+            document.getElementById("userNameDisplay").innerText =
+              profile.displayName;
+            document
+              .getElementById("profileSection")
+              .classList.remove("hidden");
+
+            // Enable Button
             const btn = document.getElementById("submitBtn");
             btn.disabled = false;
-            btn.innerText = "🚀 ยืนยันแจ้งซ่อม";
+            btn.innerText = "🚀 ยืนยันการแจ้งซ่อม";
           } else {
             liff.login();
           }
@@ -158,10 +263,10 @@
           e.preventDefault();
           document.getElementById("loading").classList.remove("hidden");
 
-          // 1. แปลงรูปภาพ
+          // 1. Convert Image
           let img64 = "",
             imgType = "";
-          const f = document.getElementById("img").files[0];
+          const f = document.getElementById("imageFile").files[0];
           if (f) {
             if (f.size > 5 * 1024 * 1024) {
               alert("รูปใหญ่เกิน 5MB");
@@ -176,15 +281,15 @@
             });
           }
 
-          // 2. เตรียมข้อมูล JSON
+          // 2. Prepare Data
           const payload = {
             action: "create_ticket",
             data: {
               userId: liff.getDecodedIDToken().sub,
               name: document.getElementById("name").value,
-              department: document.getElementById("dept").value,
+              department: document.getElementById("department").value,
               phone: document.getElementById("phone").value,
-              location: document.getElementById("loc").value,
+              location: document.getElementById("location").value,
               equipment: document.getElementById("equipment").value,
               description: document.getElementById("description").value,
               imageBase64: img64,
@@ -192,8 +297,7 @@
             },
           };
 
-          // 3. ส่งข้อมูลไป Google Apps Script
-          // ใช้ text/plain เพื่อแก้ปัญหา CORS และรับ Ticket ID กลับมาได้
+          // 3. Send to Google Apps Script
           fetch(GAS_API, {
             method: "POST",
             redirect: "follow",
@@ -207,7 +311,7 @@
               if (res.status === "success" || res.result === "success") {
                 const ticket = res.ticketId || "ได้รับข้อมูลแล้ว";
 
-                // ✅ แจ้งเตือนเลข Ticket และปิดหน้าต่างทันที (ไม่ส่งข้อความเข้าแชท)
+                // ✅ แจ้งเตือนเลข Ticket และปิดหน้าต่างทันที (ไม่ส่งเข้าแชท)
                 alert(
                   `✅ บันทึกสำเร็จ!\n\nเลขที่ใบงาน: ${ticket}\nระบบได้รับข้อมูลเรียบร้อยแล้ว`
                 );
