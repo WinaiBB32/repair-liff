@@ -5,130 +5,152 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>แจ้งซ่อมออนไลน์</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     body {
       font-family: 'Kanit', sans-serif;
+      background-color: #f3f4f6;
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
   </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen pb-24">
+<body class="text-gray-700">
 
-  <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
-    <div class="bg-blue-600 p-6 text-white rounded-b-3xl text-center shadow-md">
-      <h1 class="text-xl font-bold">🛠️ ใบแจ้งซ่อม</h1>
-      <p class="text-blue-100 text-xs mt-1">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+  <div class="max-w-md mx-auto min-h-screen relative pb-24">
+
+    <div class="glass-effect sticky top-0 z-40 shadow-sm px-6 py-4 rounded-b-3xl">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-xl font-bold text-indigo-900">🛠️ ใบแจ้งซ่อม</h1>
+          <p class="text-xs text-gray-500">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+        </div>
+        <div id="profileSection" class="hidden">
+          <img id="userImg" src="" class="w-10 h-10 rounded-full border-2 border-indigo-100 shadow-sm">
+        </div>
+      </div>
     </div>
 
-    <form id="repairForm" class="px-5 mt-6 space-y-5">
+    <form id="repairForm" class="px-5 mt-6 space-y-6">
 
-      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
-        <h3 class="font-bold text-gray-700 text-sm border-b pb-2 flex items-center gap-2">
-          <i class="fas fa-user-circle text-blue-500"></i> 1. ข้อมูลผู้แจ้ง
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+        <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <i class="fas fa-user-circle text-indigo-500 text-lg"></i> ข้อมูลผู้แจ้ง
         </h3>
 
-        <div class="bg-gray-100 p-2 rounded-lg flex items-center gap-3 border border-gray-200">
-          <img id="lineProfileImg" src="" class="w-8 h-8 rounded-full bg-gray-300">
-          <div class="overflow-hidden">
-            <p class="text-[10px] text-gray-400">แจ้งโดยบัญชี LINE:</p>
-            <p id="lineDisplayName" class="text-sm font-bold text-gray-600 truncate">กำลังโหลด...</p>
+        <div class="space-y-3">
+          <div class="bg-gray-100 p-2 rounded-lg flex items-center gap-2 border border-gray-200">
+            <i class="fab fa-line text-green-500 text-xl"></i>
+            <div class="overflow-hidden">
+              <p class="text-[10px] text-gray-400">แจ้งโดยบัญชี LINE:</p>
+              <p id="lineDisplayName" class="text-sm font-bold text-gray-600 truncate">กำลังโหลด...</p>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label class="text-xs text-gray-500">ชื่อ-นามสกุล (สำหรับติดต่อ)</label>
-          <input type="text" id="name"
-            class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500"
-            placeholder="ระบุชื่อ-นามสกุลจริง" required>
-        </div>
-
-        <div class="flex gap-2">
-          <div class="w-1/2">
-            <label class="text-xs text-gray-500">หน่วยงาน</label>
-            <input type="text" id="dept"
-              class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500" placeholder="สังกัด"
-              required>
+          <div>
+            <label class="text-xs text-gray-400 ml-1">ชื่อ-นามสกุล (สำหรับติดต่อ)</label>
+            <input type="text" id="name"
+              class="w-full p-2.5 bg-white border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+              placeholder="ระบุชื่อ-นามสกุลจริง" required>
           </div>
-          <div class="w-1/2">
-            <label class="text-xs text-gray-500">เบอร์โทร</label>
-            <input type="tel" id="phone"
-              class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500"
-              placeholder="เบอร์ติดต่อ" required>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs text-gray-400 ml-1">หน่วยงาน</label>
+              <input type="text" id="department" class="w-full p-2.5 bg-white border border-gray-300 rounded-xl text-sm"
+                placeholder="ระบุหน่วยงาน" required>
+            </div>
+            <div>
+              <label class="text-xs text-gray-400 ml-1">เบอร์โทร</label>
+              <input type="tel" id="phone" class="w-full p-2.5 bg-white border border-gray-300 rounded-xl text-sm"
+                placeholder="เบอร์ติดต่อ" required>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
-        <h3 class="font-bold text-gray-700 text-sm border-b pb-2 flex items-center gap-2">
-          <i class="fas fa-tools text-orange-500"></i> 2. รายละเอียดงาน
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-1 h-full bg-orange-500"></div>
+        <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <i class="fas fa-tools text-orange-500 text-lg"></i> รายละเอียดงาน
         </h3>
-
-        <div>
-          <label class="text-xs text-gray-500">สถานที่</label>
-          <input type="text" id="loc"
-            class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500"
-            placeholder="ตึก / ชั้น / ห้อง" required>
-        </div>
-
-        <div class="flex gap-2">
-          <div class="w-2/3">
-            <label class="text-xs text-gray-500">อุปกรณ์</label>
-            <input type="text" id="equip"
-              class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500"
-              placeholder="ชื่ออุปกรณ์" required>
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs text-gray-400 ml-1">สถานที่</label>
+            <input type="text" id="location" class="w-full p-2.5 bg-white border border-gray-300 rounded-xl text-sm"
+              placeholder="ตึก / ชั้น / ห้อง" required>
           </div>
-          <div class="w-1/3">
-            <label class="text-xs text-gray-500">จำนวน</label>
-            <input type="number" id="qty"
-              class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500 text-center"
-              value="1" required>
-          </div>
-        </div>
 
-        <div>
-          <label class="text-xs text-gray-500">อาการเสีย</label>
-          <textarea id="desc" rows="3"
-            class="w-full p-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500"
-            placeholder="ระบุอาการอย่างละเอียด" required></textarea>
+          <div class="flex gap-2">
+            <div class="w-2/3">
+              <label class="text-xs text-gray-400 ml-1">อุปกรณ์</label>
+              <input type="text" id="equipment" class="w-full p-2.5 bg-white border border-gray-300 rounded-xl text-sm"
+                placeholder="ชื่ออุปกรณ์" required>
+            </div>
+            <div class="w-1/3">
+              <label class="text-xs text-gray-400 ml-1">จำนวน</label>
+              <input type="number" id="qty"
+                class="w-full p-2.5 bg-white border border-gray-300 rounded-xl text-sm text-center" value="1" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs text-gray-400 ml-1">อาการเสีย</label>
+            <textarea id="description" rows="3" class="w-full p-3 bg-white border border-gray-300 rounded-xl text-sm"
+              placeholder="ระบุอาการอย่างละเอียด" required></textarea>
+          </div>
         </div>
       </div>
 
-      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-        <label class="font-bold text-gray-700 text-sm mb-2 block">
-          <i class="fas fa-camera text-green-500 mr-1"></i> 3. รูปภาพประกอบ <span class="text-red-500">*</span>
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+        <label class="text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+          <i class="fas fa-camera text-green-500 text-lg"></i> รูปภาพประกอบ <span class="text-red-500">*</span>
         </label>
 
-        <div class="relative">
+        <div class="relative mt-3 group">
           <input type="file" id="img" accept="image/*" class="hidden" onchange="previewImage(this)" required>
           <div id="uploadBox"
-            class="w-full h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50"
+            class="w-full h-32 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition"
             onclick="document.getElementById('img').click()">
-            <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-1"></i>
-            <p class="text-xs text-gray-400">แตะเพื่อเลือกรูปภาพ</p>
+            <div id="placeholder" class="text-center">
+              <i class="fas fa-cloud-upload-alt text-2xl text-gray-300 mb-2"></i>
+              <p class="text-xs text-gray-400">แตะเพื่อเลือกรูปภาพ</p>
+            </div>
+            <img id="preview" class="hidden h-full w-full object-cover rounded-xl">
           </div>
-          <img id="preview" class="hidden w-full h-48 object-cover rounded-lg mt-2 border border-gray-200">
         </div>
       </div>
 
       <button type="submit" id="submitBtn"
-        class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-blue-700 disabled:bg-gray-400 transition"
+        class="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
         disabled>
-        ⏳ กำลังเชื่อมต่อ...
+        ⏳ กำลังเชื่อมต่อ LINE...
       </button>
+
     </form>
   </div>
 
   <div id="loading"
-    class="hidden fixed inset-0 bg-black/70 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
-    <div class="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mb-3"></div>
-    <p class="text-white font-bold">กำลังส่งข้อมูล...</p>
+    class="hidden fixed inset-0 bg-white/90 backdrop-blur-sm z-50 flex flex-col items-center justify-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-100 border-t-indigo-600 mb-4"></div>
+    <p class="text-indigo-800 font-bold animate-pulse">กำลังส่งข้อมูล...</p>
   </div>
 
   <script>
+    // ============================================
+    // ⚙️ ตั้งค่า
     // ============================================
     const LIFF_ID = "2008574686-nwaPEvQj";
     const GAS_API = "https://script.google.com/macros/s/AKfycbwL8pWR4T3YJ_8F8ukmvj5IBtl6yKFYXfUh_cRcoVzK_wjE5PvSnHJ9e9yJCYwUaXIzEQ/exec";
@@ -140,7 +162,8 @@
         reader.onload = function (e) {
           document.getElementById('preview').src = e.target.result;
           document.getElementById('preview').classList.remove('hidden');
-          document.getElementById('uploadBox').classList.add('hidden');
+          document.getElementById('placeholder').classList.add('hidden');
+          document.getElementById('uploadBox').classList.remove('border-2', 'border-dashed');
         }
         reader.readAsDataURL(input.files[0]);
       }
@@ -151,15 +174,15 @@
         await liff.init({ liffId: LIFF_ID });
         if (liff.isLoggedIn()) {
           const profile = await liff.getProfile();
-          // 1. แสดงชื่อ LINE ในกล่องสีเทา
-          document.getElementById('lineDisplayName').innerText = profile.displayName;
-          document.getElementById('lineProfileImg').src = profile.pictureUrl;
 
-          // 2. ช่องชื่อจริง ให้ผู้ใช้พิมพ์เอง (ไม่ Auto-fill)
+          // แสดงชื่อ LINE (แต่ไม่เอาไปใส่ในช่อง input ที่ส่งข้อมูล)
+          document.getElementById('lineDisplayName').innerText = profile.displayName;
+          document.getElementById('userImg').src = profile.pictureUrl;
+          document.getElementById('profileSection').classList.remove('hidden');
 
           const btn = document.getElementById('submitBtn');
           btn.disabled = false;
-          btn.innerText = "🚀 ยืนยันแจ้งซ่อม";
+          btn.innerText = "🚀 ยืนยันการแจ้งซ่อม";
         } else {
           liff.login();
         }
@@ -194,7 +217,6 @@
     document.getElementById('repairForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // เช็ครูปภาพ
       const f = document.getElementById('img').files[0];
       if (!f) { alert("กรุณาแนบรูปภาพ"); return; }
 
@@ -210,12 +232,12 @@
           data: {
             userId: liff.getDecodedIDToken().sub,
             name: document.getElementById('name').value, // ชื่อจริงที่พิมพ์เอง
-            department: document.getElementById('dept').value,
+            department: document.getElementById('department').value,
             phone: document.getElementById('phone').value,
-            location: document.getElementById('loc').value,
+            location: document.getElementById('location').value,
             equipment: document.getElementById('equipment').value,
-            quantity: document.getElementById('qty').value, // ✅ มีช่องนี้แล้ว Error หายแน่นอน
-            description: document.getElementById('desc').value,
+            quantity: document.getElementById('qty').value, // ✅ อ่านค่าจากช่องจำนวน (ไม่ Null แล้ว)
+            description: document.getElementById('description').value,
             imageBase64: finalBase64,
             imageType: 'image/jpeg'
           }
@@ -226,7 +248,7 @@
           redirect: 'follow',
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload),
-          credentials: 'omit'
+          credentials: 'omit' // ✅ แก้ปัญหา iOS Load Failed
         })
           .then(r => r.json())
           .then(res => {
@@ -245,7 +267,7 @@
 
       } catch (error) {
         document.getElementById('loading').classList.add('hidden');
-        alert("Resize Error: " + error);
+        alert("System Error: " + error);
       }
     });
   </script>
