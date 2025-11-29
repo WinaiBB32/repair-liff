@@ -9,6 +9,7 @@
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       font-family: 'Kanit', sans-serif;
@@ -16,38 +17,49 @@
   </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-gray-100 min-h-screen pb-24">
 
-  <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative pb-10">
+  <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
     <div class="bg-blue-600 p-6 text-white rounded-b-3xl text-center shadow-md">
-      <h1 class="text-2xl font-bold">🛠️ ใบแจ้งซ่อม</h1>
-      <p class="text-blue-100 text-sm mt-1">ระบบแจ้งซ่อมออนไลน์</p>
+      <h1 class="text-xl font-bold">🛠️ ใบแจ้งซ่อม</h1>
+      <p class="text-blue-100 text-xs mt-1">กรุณากรอกข้อมูลให้ครบถ้วน</p>
     </div>
 
     <div id="sys-error"
       class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative m-4 text-xs"></div>
 
-    <form id="repairForm" class="p-6 space-y-4 -mt-4">
+    <form id="repairForm" class="px-5 mt-6 space-y-5">
 
-      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3">
-        <h3 class="font-bold text-gray-700 border-b pb-2 text-sm uppercase">1. ข้อมูลผู้แจ้ง</h3>
-        <div class="flex items-center gap-2 bg-gray-50 p-2 rounded text-gray-500 text-xs border border-gray-200">
-          <span id="lineDisplayName">กำลังโหลดข้อมูล LINE...</span>
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <h3 class="font-bold text-gray-700 text-sm border-b pb-2 flex items-center gap-2">
+          <i class="fas fa-user-circle text-blue-500"></i> 1. ข้อมูลผู้แจ้ง
+        </h3>
+
+        <div class="bg-gray-100 p-2 rounded-lg flex items-center gap-3 border border-gray-200">
+          <i class="fab fa-line text-green-500 text-xl"></i>
+          <div class="overflow-hidden">
+            <p class="text-[10px] text-gray-400">แจ้งโดยบัญชี LINE:</p>
+            <p id="lineDisplayName" class="text-sm font-bold text-gray-600 truncate">กำลังโหลด...</p>
+          </div>
         </div>
+
         <input type="text" id="name" class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm"
-          placeholder="ชื่อ-นามสกุลจริง" required>
+          placeholder="ระบุชื่อ-นามสกุลจริง" required>
         <div class="flex gap-2">
           <input type="text" id="dept" class="w-1/2 p-2.5 bg-gray-50 border rounded-lg text-sm" placeholder="หน่วยงาน"
             required>
-          <input type="tel" id="phone" class="w-1/2 p-2.5 bg-gray-50 border rounded-lg text-sm" placeholder="เบอร์โทร"
-            required>
+          <input type="tel" id="phone" class="w-1/2 p-2.5 bg-gray-50 border rounded-lg text-sm"
+            placeholder="เบอร์ติดต่อ" required>
         </div>
       </div>
 
-      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3">
-        <h3 class="font-bold text-gray-700 border-b pb-2 text-sm uppercase">2. รายละเอียดงาน</h3>
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <h3 class="font-bold text-gray-700 text-sm border-b pb-2 flex items-center gap-2">
+          <i class="fas fa-tools text-orange-500"></i> 2. รายละเอียดงาน
+        </h3>
+
         <input type="text" id="loc" class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm"
-          placeholder="สถานที่ (ตึก/ชั้น/ห้อง)" required>
+          placeholder="สถานที่ (ตึก / ชั้น / ห้อง)" required>
 
         <div class="flex gap-2">
           <div class="w-2/3">
@@ -56,18 +68,31 @@
           </div>
           <div class="w-1/3">
             <input type="number" id="qty" class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm text-center"
-              placeholder="จำนวน" value="1" required>
+              value="1" required>
           </div>
         </div>
 
         <textarea id="desc" rows="3" class="w-full p-2.5 bg-gray-50 border rounded-lg text-sm"
-          placeholder="อาการเสียอย่างละเอียด" required></textarea>
+          placeholder="ระบุอาการอย่างละเอียด" required></textarea>
       </div>
 
-      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-        <label class="font-bold text-gray-700 block mb-2 text-sm uppercase">3. รูปภาพประกอบ <span
-            class="text-red-500">*</span></label>
-        <input type="file" id="img" accept="image/*" class="w-full text-sm text-gray-500" required>
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+        <label class="font-bold text-gray-700 text-sm mb-2 block">
+          <i class="fas fa-camera text-green-500 mr-1"></i> 3. รูปภาพประกอบ <span class="text-red-500">*</span>
+        </label>
+
+        <div class="relative mt-3 group">
+          <input type="file" id="img" accept="image/*" class="hidden" onchange="previewImage(this)" required>
+          <div id="uploadBox"
+            class="w-full h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition"
+            onclick="document.getElementById('img').click()">
+            <div id="placeholder" class="text-center">
+              <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-2"></i>
+              <p class="text-xs text-gray-400">แตะเพื่อเลือกรูปภาพ</p>
+            </div>
+            <img id="preview" class="hidden w-full h-48 object-cover rounded-lg mt-2 border border-gray-200">
+          </div>
+        </div>
       </div>
 
       <button type="submit" id="submitBtn"
@@ -75,22 +100,23 @@
         ⏳ กำลังเชื่อมต่อ LINE...
       </button>
     </form>
+  </div>
 
-    <div id="loading"
-      class="hidden fixed inset-0 bg-black/60 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
-      <div class="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mb-3"></div>
-      <p class="text-white font-bold">กำลังส่งข้อมูล...</p>
-    </div>
+  <div id="loading"
+    class="hidden fixed inset-0 bg-black/70 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
+    <div class="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mb-3"></div>
+    <p class="text-white font-bold">กำลังส่งข้อมูล...</p>
+    <p class="text-gray-300 text-xs mt-2">(กำลังย่อรูปและบันทึก กรุณารอสักครู่)</p>
   </div>
 
   <script>
     // ============================================
-    // ⚠️ ตรวจสอบค่าตรงนี้ให้ถูกต้อง (ห้ามมีเว้นวรรค)
+    // ⚙️ ตั้งค่า (ตรวจสอบ LIFF ID และ Google Script URL ให้ถูกต้อง)
     const LIFF_ID = "2008574686-nwaPEvQj";
     const GAS_API = "https://script.google.com/macros/s/AKfycbwL8pWR4T3YJ_8F8ukmvj5IBtl6yKFYXfUh_cRcoVzK_wjE5PvSnHJ9e9yJCYwUaXIzEQ/exec";
     // ============================================
 
-    // ตัวดักจับ Error ระดับระบบ (ถ้าโค้ดพัง มันจะฟ้องตรงนี้)
+    // ตัวดักจับ Error ระดับระบบ
     window.onerror = function (msg, url, line) {
       const errBox = document.getElementById('sys-error');
       errBox.innerText = `💥 System Error: ${msg} (Line: ${line})`;
@@ -98,16 +124,26 @@
       document.getElementById('submitBtn').innerText = "เกิดข้อผิดพลาด (ดูด้านบน)";
     };
 
+    function previewImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('preview').src = e.target.result;
+          document.getElementById('preview').classList.remove('hidden');
+          document.getElementById('placeholder').classList.add('hidden');
+          document.getElementById('uploadBox').classList.remove('border-2', 'border-dashed');
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
     async function main() {
       try {
-        // เริ่มต้น LIFF
         await liff.init({ liffId: LIFF_ID });
-
         if (liff.isLoggedIn()) {
           const profile = await liff.getProfile();
           document.getElementById('lineDisplayName').innerText = "LINE: " + profile.displayName;
 
-          // เปิดปุ่ม
           const btn = document.getElementById('submitBtn');
           btn.disabled = false;
           btn.innerText = "🚀 ยืนยันแจ้งซ่อม";
@@ -115,30 +151,32 @@
           liff.login();
         }
       } catch (err) {
-        // แจ้งเตือนถ้า LIFF Init ไม่ผ่าน
-        alert("LIFF Init Failed: " + err.code + "\n" + err.message);
-        document.getElementById('sys-error').innerText = "LIFF Error: " + err.message;
-        document.getElementById('sys-error').classList.remove('hidden');
+        alert("LIFF Init Error: " + err.message);
       }
     }
-
-    // รัน main ทันทีเมื่อโหลดเสร็จ
+    // เรียกใช้งานเมื่อหน้าเว็บโหลดเสร็จ
     window.onload = main;
 
-    // ฟังก์ชันย่อรูป
+    // ฟังก์ชันย่อรูป (Resize Image) เพื่อลดขนาดไฟล์ก่อนส่ง
     const resizeImage = (file) => new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          const maxDim = 800;
+          const maxDim = 800; // ขนาดด้านกว้างสุดไม่เกิน 800px
           let width = img.width; let height = img.height;
-          if (width > height) { if (width > maxDim) { height *= maxDim / width; width = maxDim; } }
-          else { if (height > maxDim) { width *= maxDim / height; height = maxDim; } }
+
+          if (width > height) {
+            if (width > maxDim) { height *= maxDim / width; width = maxDim; }
+          } else {
+            if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+          }
+
           canvas.width = width; canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
+          // คืนค่าเป็น Base64 (Quality 0.7)
           resolve(canvas.toDataURL('image/jpeg', 0.7));
         };
         img.src = e.target.result;
@@ -148,14 +186,16 @@
 
     document.getElementById('repairForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
       const f = document.getElementById('img').files[0];
       if (!f) { alert("กรุณาแนบรูปภาพ"); return; }
 
       document.getElementById('loading').classList.remove('hidden');
 
       try {
+        // ย่อรูป
         const resizedBase64 = await resizeImage(f);
-        const finalBase64 = resizedBase64.split(',')[1];
+        const finalBase64 = resizedBase64.split(',')[1]; // ตัด Header ออก
 
         const payload = {
           action: 'create_ticket',
@@ -166,13 +206,14 @@
             phone: document.getElementById('phone').value,
             location: document.getElementById('loc').value,
             equipment: document.getElementById('equipment').value,
-            quantity: document.getElementById('qty')?.value || '1', // กันเหนียว
+            quantity: document.getElementById('qty').value, // ✅ ใช้ .value (มี id="qty" แล้ว)
             description: document.getElementById('desc').value,
             imageBase64: finalBase64,
             imageType: 'image/jpeg'
           }
         };
 
+        // ใช้ jQuery AJAX เพื่อความเสถียรบนทุกอุปกรณ์
         $.ajax({
           url: GAS_API,
           type: "POST",
